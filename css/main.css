@@ -1919,13 +1919,18 @@ a,
   cursor: pointer;
 }
 .loader {
-  width: 200px;
-  height: 200px;
+  width: 1500px;
+  height: 1500px;
   margin: 0 auto;
-  margin-top: 200px;
   animation: rotate 2s linear infinite;
   stroke-width: 2px;
   border-radius: 50%;
+  position: relative;
+}
+.loader svg {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 @-moz-keyframes rotate {
   0% {

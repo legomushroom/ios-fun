@@ -5,8 +5,7 @@
     <title>svg fun</title>
     <link href="css/main.css" type="text/css" rel="stylesheet">
   </head>
-  <body>
-    <section role="main" id="main"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0" height="0" viewBox="0 0 200 200" style="position: absolute; margin-left: -100%;">
+  <body><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0" height="0" viewBox="0 0 200 200" style="position: absolute; margin-left: -100%;">
   <defs>
     <linearGradient id="redyel" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#ff0000"/>   
@@ -33,20 +32,31 @@
         <stop offset="100%" stop-color="#ff0000"/>   
     </linearGradient>
 
-    <pattern id="gradient-pattern" width="1" height="115" patternUnits="userSpaceOnUse">
-
-        <rect x="0" y="0"   width="1" height="100" fill="url(#redyel)" />
-        <rect x="0" y="99"  width="1" height="100" fill="url(#yelgre)" />
-        <rect x="0" y="188"  width="1" height="100" fill="url(#grecya)" />
-        <rect x="0" y="57"  width="1" height="100" fill="url(#cyablu)" />
-        <rect x="0" y="76"  width="1" height="100" fill="url(#blumag)" />
-        <rect x="0" y="95"  width="1" height="100" fill="url(#magred)" />
-    
+    <pattern id="gradient-pattern" width="1" height="1800" patternUnits="userSpaceOnUse">
+        <g transform="rotate(0,0,0)">
+            <rect x="0" y="0"   width="1" height="300" fill="url(#redyel)" />
+            <rect x="0" y="300"  width="1" height="300" fill="url(#yelgre)" />
+            <rect x="0" y="600"  width="1" height="300" fill="url(#grecya)" />
+            <rect x="0" y="900"  width="1" height="300" fill="url(#cyablu)" />
+            <rect x="0" y="1200"  width="1" height="300" fill="url(#blumag)" />
+            <rect x="0" y="1500"  width="1" height="300" fill="url(#magred)" />
+        </g>
     </pattern>
+
+    <clipPath id="clip1">
+        <rect x="1500" y="200" width="10" height="900" />
+    </clipPath>
 
     <pattern id="striped-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
         <path d="M-4 12L12 -4ZM12 6L6 12ZM-4 2L2 -4" stroke="white" stroke-opacity=".4" stroke-width="1"></path>
     </pattern>
+
+    <path id="diamond" d="M15.49,32l0.556-0.369l0.32-0.076l0.239,0.158l14.672-21.176h0.16v-0.229l0.553-0.799l-0.555-0.366l0.531-0.398L25.416,0.43
+    V0h-9.364v0.652l-0.004,0.003V0H6.625v0.434l-6.591,8.39l0.534,0.402H0.566l0,0L0.009,9.594 M20.904,9.23h-4.184V9.226h-5.498
+    l4.833-7.36L20.904,9.23z M17.277,1.306h6.584l-2.026,6.924L17.277,1.306z M10.229,8.303L8.19,1.317h6.625L10.229,8.303z
+     M9.097,9.226H1.416l5.601-7.13L9.097,9.226z M16.721,10.543v-0.006h3.811l-4.514,18.176l-4.499-18.17H16.721z M25.025,2.078
+    l5.586,7.089L30.566,9.23h-7.634L25.025,2.078z M10.133,10.543l4.381,17.691L2.29,10.543H10.133z M17.575,27.982l4.333-17.445h7.754
+    L17.575,27.982z"/>
 
   </defs>
 
@@ -59,16 +69,33 @@
     <path vector-effect="non-scaling-stroke" d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#magred)"/>
   </g>
 </svg>
-      <div class="loader">
-        <svg viewBox="-10 -10 220 220">
-          <use xlink:href="#circle"></use>
-        </svg>
-      </div>
-      <div class="loader">
-        <svg viewBox="-10 -10 220 220">
-          <rect fill="url(#gradient-pattern)" width="100%" height="100%"></rect>
-        </svg>
-      </div>
-    </section>
+    <div class="loader">
+      <svg viewBox="0 0 3000 3000">
+        <g clip-path="url(#clip1)">
+          <rect id="id1" transform="rotate(40)" fill="url(#gradient-pattern)" width="100%" height="100%"></rect>
+        </g>
+        <script>
+          var el = document.getElementById('id1');
+          var i = 0;
+          var interval = setInterval(function(){
+           i++;
+           el.setAttribute('transform','rotate(' + i + ', 1500, 1500)');
+          }, 1000/30) 
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        </script>
+      </svg>
+    </div>
   </body>
 </html>
