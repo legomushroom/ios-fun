@@ -1,0 +1,32 @@
+@import 'assets/imports.styl'
+@import 'css-assets/normalize.styl'
+
+@import 'css-assets/font/stylesheet.css'
+@import 'css-assets/general'
+@import 'css-assets/elements'
+@import 'css-assets/blocks'
+@import 'css-assets/layouts'
+@import 'css-assets/effects'
+@import 'css-assets/icons'
+
+
+.loader
+		rect 200px
+		margin 0 auto
+		margin-top 200px
+		animation rotate 2s linear infinite
+		// -webkit-animation rotate 2s linear infinite
+		stroke-width 2px
+		border-radius 50%
+
+
+
+@keyframes rotate{
+  0%{
+    crossTransform rotate(0deg)
+  }
+  100%{
+    crossTransform rotate(360deg)
+  }
+}
+
