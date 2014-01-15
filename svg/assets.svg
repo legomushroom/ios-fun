@@ -37,7 +37,7 @@
     </pattern>
 
     <clipPath id="clip1">
-        <rect x="1500" y="200" width="10" height="900" />
+        <rect x="1500" y="200" width="2" height="1500" />
     </clipPath>
 
     <pattern id="striped-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
