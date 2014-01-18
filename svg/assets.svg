@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0" height="0" viewBox="0 0 200 200" style="position: absolute; margin-left: -100%;">
+<svg id="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="0" height="0" viewBox="0 0 200 200" style="">
   <defs>
     <linearGradient id="redyel" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#ff0000"/>   
@@ -50,7 +50,15 @@
     </mask>
 
     <mask id="mask2">
-        <image x="1500" y="1500" height="1500px" width="1500px" xlink:href="http://24.media.tumblr.com/8d19021aee1d58e431326ace608e47e5/tumblr_mzggk8JVZV1s2t3cto1_400.gif"></image>
+        <use xlink:href="#foreign-obj"></use>
+
+        <foreignObject id="foreign-obj" y="0" height="1500" width="1500" x="0">
+            <rect width="1000" height="1000" fill="white"></rect>
+        </foreignObject>
+
+       <!--  <image x="1500" y="1500" height="1500px" width="1500px" xlink:href="css/i/13.gif"></image> -->
+        <!-- <image x="1500" y="1500" height="1500px" width="1500px" xlink:href="http://25.media.tumblr.com/cd7aa79a89efb2a05aea666eadaa1dc0/tumblr_my0iucageQ1s2t3cto1_400.gif"></image> -->
+       <!--  <image x="1500" y="1500" height="1500px" width="1500px" xlink:href="http://24.media.tumblr.com/8d19021aee1d58e431326ace608e47e5/tumblr_mzggk8JVZV1s2t3cto1_400.gif"></image> -->
         <!-- <image xlink:href="http://d13yacurqjgara.cloudfront.net/users/4111/screenshots/1337431/dec-6-2013.gif" x="1500" y="1500" height="1500px" width="1500px" ></image> -->
         <path id="js-path" stroke-dasharray="3600 3600" stroke-dashoffset="0.00" fill="none" stroke="white" stroke-width="4" d="M1539,1747.75c-7.482-6.77-1-22.875-1-22.875
     l-6.125,16.5c-8.375,10.962-18.125,10.962-18.125,10.962c-13.125,2.413-17.238-8.238-17.238-8.238
@@ -98,4 +106,113 @@
     <path vector-effect="non-scaling-stroke" d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#blumag)"/>
     <path vector-effect="non-scaling-stroke" d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#magred)"/>
   </g>
+
+
+
+<foreignObject x="0" height="1500" width="1500" y="0"><canvas xmlns="http://www.w3.org/1999/xhtml" width="1500" height="1500"></canvas><img xmlns="http://www.w3.org/1999/xhtml" src="http://placekitten.com/g/300/300" style="visibility: hidden;" /></foreignObject>
+
+<script type="text/javascript"><![CDATA[
+    /*
+ * $Id: SVGCanvasElement.js 778 2009-08-04 09:53:53Z klaus $
+ *
+ * This is a simple helper library to use canvas in SVG. It creates
+ * canvas elements within foreignObjects
+ *
+ * Example:
+ *
+ * var canvas = new SVGCanvasElement(0,0,300,150,parentNode);
+ * var context = canvas.getContext('2d');
+ * context.fillRect(0,0,300,150);
+ *
+ * @param {float} dx: upper-left x-coordinate of canvas-area
+ * @param {float} dy: upper-left y-coordinate of canvas-area
+ * @param {float} dw: overall width of canvas-area
+ * @param {float} dh: overall height of canvas-area
+ * @param {SVGElement} parentNode: append foreignObject with canvas to this node (optional)
+ *                                 defaults to document.rootElement if not specified
+ * @return {SVGCanvasElement}: object that implements the HTMLCanvasElement interface
+ *
+ */
+
+(function(){
+    // namespaces
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var xhtmlNS = 'http://www.w3.org/1999/xhtml';
+    var xlinkNS = 'http://www.w3.org/1999/xlink';
+
+    var SVGCanvasElement_ = function(dx,dy,dw,dh,parentNode) {
+        // create <foreignObject /> SVG-element
+        var f = document.createElementNS(svgNS,"foreignObject");
+        f.x.baseVal.value = dx;
+        f.y.baseVal.value = dy;
+        f.width.baseVal.value = dw;
+        f.height.baseVal.value = dh;
+        f.setAttributeNS(null,'id','foreign-obj');
+
+        // create <canvas /> XHTML-element
+        var c = document.createElementNS(xhtmlNS,"canvas");
+        c.width = dw;
+        c.height = dh;
+
+        // append foreignObject to parent-node and canvas to foreignObject
+        var pNode = (typeof parentNode != 'undefined') ? parentNode : document.getElementById('svg');
+        var foObj = pNode.appendChild(f);
+        var cElem = foObj.appendChild(c);
+
+        // expose HTMLCanvasElement interface
+        this.canvas = cElem;
+        this.width = cElem.width;
+        this.height = cElem.height;
+        this.toDataURL = function(type) {
+            // TODO: implement variadic args
+            return cElem.toDataURL(type);
+        };
+        this.getContext = function(contextId) {
+            return cElem.getContext(contextId);
+        };
+
+       /*
+        * This custom method adds an HTMLImageElement to the canvas' foreignObject
+        * It expects the ID of an existing SVGImage or a reference to an SVGImage node as argument.
+        * In both cases, the xlink:href is used as src for the appended HTMLImageElement.
+        *
+        * Examples:
+        * context.drawImage(canvas.importImage(svgImageRef),0,0);
+        * context.drawImage(canvas.importImage('svgImage'),0,0);
+        *
+        * @param {string|SVGImageElement} sourceImg: ID of SVGImageElement or reference to an SVGImageElement 
+        * @return {HTMLImageElement}: reference to the html img-element created in foreignObject
+        *
+        */
+        this.importImage = function(sourceImg) {
+            var imgSrc = (typeof sourceImg == 'string')
+                ? document.getElementById(sourceImg).getAttributeNS(xlinkNS,"href")
+                : sourceImg.getAttributeNS(xlinkNS,"href");
+            var img = document.createElementNS(xhtmlNS,"img");
+            img.setAttributeNS(null,"src",imgSrc);
+            img.style.visibility = "hidden";
+            return foObj.appendChild(img);
+        };
+    }
+    window.SVGCanvasElement = SVGCanvasElement_;
+})();
+
+]]></script>
+
+<script type="text/javascript"><![CDATA[
+window.onload = function() {
+    var canvas = new SVGCanvasElement(0,0,1500,1500);
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle="#FFF";
+    ctx.fillRect(0,0,150,75);
+  
+};
+]]></script>
+
+
 </svg>
+
+
+
+
